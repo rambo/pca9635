@@ -1,7 +1,7 @@
 // safety againts double-include
 #ifndef pca9635_h
 #define pca9635_h
-#include <WProgram.h> 
+#include <Arduino.h> 
 #include <i2c_device.h>
 
 // Stub extension for now
