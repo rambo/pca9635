@@ -35,12 +35,13 @@ void pca9635::begin(byte dev_addr, boolean wire_begin)
 boolean pca9635::set_led_mode(byte ledno, byte mode)
 {
     byte reg = 0x17;
-    // PONDER: Is there a more optimized way
-    if (8 < ledno < 11)
+    if (   8 < ledno
+        && ledno < 11)
     {
         reg = 0x16;
     }
-    if (4 < ledno < 8)
+    if (   4 < ledno
+        && ledno < 8)
     {
         reg = 0x15;
     }
