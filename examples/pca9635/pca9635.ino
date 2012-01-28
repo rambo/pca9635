@@ -20,25 +20,33 @@ void setup()
     delayMicroseconds(500);
     // Enable PWM controls for all leds on all-call
     PCA9635.set_led_mode(3);
+    /**
+     * This will set the driver to open-drain mode, 0xff will set it to the default totem-pole mode
+    PCA9635.set_driver_mode(0x0);
+     */
 
     // Set device address and call I2c.begin() (note: your need to change the address to correspond to your device)
-    driver.begin(0xfe, false); // ******** You need to change the device address here ***********
+    driver.begin(0x70, false); // ******** You need to change the device address here, 0x70 is the 7-bit ALL-CALL address for PCA9635 ***********
 
     Serial.println("Booted");
 }
 
 void loop()
 {
-    // Dump device registers and wait 15sek
-    driver.dump_registers(0x0, 0x1b);
+    // Scan the bus, output addresses (just 
+    I2c.scan();
+    delay(1000);
+    
     // Blink leds in turn on all-call
-    Serial.println("Blinking all drivers leds' in turn");
+    Serial.println("Blinking all drivers leds' in turn (via ALL-CALL)");
     for (byte ledno = 0; ledno < 16; ledno++)
     {
+        // Using half-brightness to make the led light up regardless of whether the drver is wired to source or sink current through it (when in totem-pole mode, open drain naturally is sink-only)
         PCA9635.set_led_pwm(ledno, 0x80);
         delay(250);
         PCA9635.set_led_pwm(ledno, 0x0);
     }
+    delay(1000);
     Serial.println("Blinking addressed drivers leds' in turn");
     // Blink leds in turn on the addressed instance
     for (byte ledno = 0; ledno < 16; ledno++)
@@ -48,6 +56,8 @@ void loop()
         driver.set_led_pwm(ledno, 0x0);
     }
 
+    // Dump device registers
+    driver.dump_registers(0x0, 0x1b);
 
-    delay(15000);
+    delay(5000);
 }

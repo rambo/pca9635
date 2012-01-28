@@ -135,12 +135,17 @@ boolean pca9635::enable_subaddr(byte addr)
     return this->read_modify_write(0x0 | autoincrement_bits, mask, value);
 }
 
-
+/**
+ * Changes the driver mdoe between open drain(0x0) and totem-pole (0xff, the default)
+ */
 boolean pca9635::set_driver_mode(byte mode)
 {
     return this->read_modify_write(0x01 | autoincrement_bits, (byte)~_BV(2), mode << 2);
 }
 
+/**
+ * Changes the oscillator mode between sleep (0xff, the default) and active (0x0)
+ */
 boolean pca9635::set_sleep(byte sleep)
 {
     return this->read_modify_write(0x00 | autoincrement_bits, (byte)~_BV(4), sleep << 4);
