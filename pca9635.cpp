@@ -170,13 +170,13 @@ boolean pca9635::set_led_pwm(byte ledno, byte cycle)
 boolean pca9635::reset()
 {
 #ifdef I2C_DEVICE_DEBUG
-    Serial.println("pca9635::reset() called");
+    Serial.println(F("pca9635::reset() called"));
 #endif
     byte result = I2c.write(0x03, 0xa5, 0x5a);
     if (result > 0)
     {
 #ifdef I2C_DEVICE_DEBUG
-        Serial.print("FAILED: I2c.write(0x03, 0x5a, 0xa5); returned: ");
+        Serial.print(F("FAILED: I2c.write(0x03, 0x5a, 0xa5); returned: "));
         Serial.println(result, DEC);
 #endif
         return false;

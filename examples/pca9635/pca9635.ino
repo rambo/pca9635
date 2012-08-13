@@ -28,7 +28,7 @@ void setup()
     // Set device address and call I2c.begin() (note: your need to change the address to correspond to your device)
     driver.begin(0x70, false); // ******** You need to change the device address here, 0x70 is the 7-bit ALL-CALL address for PCA9635 ***********
 
-    Serial.println("Booted");
+    Serial.println(F("Booted"));
 }
 
 void loop()
@@ -38,7 +38,7 @@ void loop()
     delay(1000);
     
     // Blink leds in turn on all-call
-    Serial.println("Blinking all drivers leds' in turn (via ALL-CALL)");
+    Serial.println(F("Blinking all drivers leds' in turn (via ALL-CALL)"));
     for (byte ledno = 0; ledno < 16; ledno++)
     {
         // Using half-brightness to make the led light up regardless of whether the drver is wired to source or sink current through it (when in totem-pole mode, open drain naturally is sink-only)
@@ -47,7 +47,7 @@ void loop()
         PCA9635.set_led_pwm(ledno, 0x0);
     }
     delay(1000);
-    Serial.println("Blinking addressed drivers leds' in turn");
+    Serial.println(F("Blinking addressed drivers leds' in turn"));
     // Blink leds in turn on the addressed instance
     for (byte ledno = 0; ledno < 16; ledno++)
     {
